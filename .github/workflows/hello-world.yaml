@@ -57,6 +57,11 @@ jobs:
       run: bash ci/build-docker.sh && GIT_COMMIT="GA-$GITHUB_SHA"
     - name: Push image
       run: bash ci/push-docker.sh && GIT_COMMIT="GA-$GITHUB_SHA"
+    - name: Upload Repo
+      uses: actions/upload-artifact@v2
+      with:
+        name: code
+        path: .
   Component-test:
     needs: Docker-image
     runs-on: self-hosted
