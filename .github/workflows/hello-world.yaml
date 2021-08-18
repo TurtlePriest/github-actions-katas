@@ -67,4 +67,4 @@ jobs:
         name: code
         path: .
     - name: Component test
-      run: ci/component-test.sh
+      run: bash ci/component-test.sh
