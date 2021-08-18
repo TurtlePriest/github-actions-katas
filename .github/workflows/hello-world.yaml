@@ -57,4 +57,14 @@ jobs:
       run: bash ci/build-docker.sh && GIT_COMMIT="GA-$GITHUB_SHA"
     - name: Push image
       run: bash ci/push-docker.sh && GIT_COMMIT="GA-$GITHUB_SHA"
-      
+  Component-test:
+    needs: Docker-image
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download code
+      uses: actions/download-artifact@v2
+      with:
+        name: code
+        path: .
+    - name: Component test
+      run: ci/component-test.sh
