@@ -7,11 +7,21 @@ jobs:
     steps:
     - name: Use Checkout
       uses: actions/checkout@v2
+      - name: Upload Repo
+      uses: actions/upload-artifact@v2
+      with:
+        name: code
+        path: .
   Build:
     needs: Clone-down
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
+    - name: Download code
+      uses: actions/download-artifact@v2
+      with:
+        name: code
+        path: .
     - name: Build
       run: ci/build-app.sh
     - name: Upload Repo
@@ -24,5 +34,10 @@ jobs:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
+    - name: Download code
+      uses: actions/download-artifact@v2
+      with:
+        name: code
+        path: .
     - name: Test
       run: ci/unit-test-app.sh
